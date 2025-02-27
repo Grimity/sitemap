@@ -119,7 +119,7 @@ async function createFeedIndex() {
             (feed) =>
               `
           <url>
-            <loc>${serviceUrl}/feed/${feed.id}</loc>
+            <loc>${serviceUrl}/feeds/${feed.id}</loc>
             <lastmod>${feed.createdAt.toISOString().split('T')[0]}</lastmod>
             ${feed.cards
               .map(
@@ -165,7 +165,7 @@ async function createUserIndex() {
             (user) =>
               `
           <url>
-            <loc>${serviceUrl}/user/${user.id}</loc>
+            <loc>${serviceUrl}/users/${user.id}</loc>
           </url>
         `
           )
@@ -204,13 +204,13 @@ async function createPostIndex() {
             (post) =>
               `
           <url>
-            <loc>${serviceUrl}/post/${post.id}</loc>
+            <loc>${serviceUrl}/posts/${post.id}</loc>
             <lastmod>${post.createdAt.toISOString().split('T')[0]}</lastmod>
             ${
               post.thumbnail
                 ? `
               <image:image>
-                <image:loc>${imageUrl}/${post.thumbnail}</image:loc>
+                <image:loc>${post.thumbnail}</image:loc>
               </image:image>
             `
                 : ''
