@@ -82,6 +82,15 @@ export type PostSave = {
     userId: string;
     createdAt: Generated<Timestamp>;
 };
+export type RefreshToken = {
+    userId: string;
+    token: string;
+    updatedAt: Generated<Timestamp>;
+    type: string;
+    device: string;
+    model: string;
+    ip: string;
+};
 export type Report = {
     id: string;
     type: number;
@@ -102,6 +111,7 @@ export type Tag = {
 };
 export type User = {
     id: string;
+    url: string;
     provider: string;
     providerId: string;
     email: string;
@@ -131,6 +141,7 @@ export type DB = {
     PostCommentLike: PostCommentLike;
     PostLike: PostLike;
     PostSave: PostSave;
+    RefreshToken: RefreshToken;
     Report: Report;
     Save: Save;
     Tag: Tag;

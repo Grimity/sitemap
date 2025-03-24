@@ -11,6 +11,7 @@ datasource db {
 
 model User {
   id              String   @id @default(uuid()) @db.Uuid
+  url             String   @unique
   provider        String
   providerId      String
   email           String
@@ -38,7 +39,8 @@ model User {
   postSaves           PostSave[]
   postComments        PostComment[]     @relation("PostCommentWrite")
   postCommentMentions PostComment[]     @relation("MentionedUser")
-  PostCommentLike     PostCommentLike[]
+  postCommentLike     PostCommentLike[]
+  refreshToken        RefreshToken[]
 
   @@unique([provider, providerId])
 }
@@ -243,4 +245,18 @@ model Report {
   refId     String   @db.Uuid
   content   String?
   createdAt DateTime @default(now())
+}
+
+model RefreshToken {
+  userId    String   @db.Uuid
+  token     String
+  updatedAt DateTime @default(now())
+  type      String
+  device    String
+  model     String
+  ip        String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, token])
 }

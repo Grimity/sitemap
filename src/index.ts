@@ -151,7 +151,7 @@ async function createFeedIndex() {
 }
 
 async function createUserIndex() {
-  const users = await db.selectFrom('User').select(['id']).execute();
+  const users = await db.selectFrom('User').select(['url']).execute();
 
   let count = Math.floor(users.length / 50000) + 1;
 
@@ -165,7 +165,7 @@ async function createUserIndex() {
             (user) =>
               `
           <url>
-            <loc>${serviceUrl}/users/${user.id}</loc>
+            <loc>${serviceUrl}/${user.url}</loc>
           </url>
         `
           )
