@@ -103,7 +103,7 @@ main().then(() => {
 async function createFeedIndex() {
   const feeds = await db
     .selectFrom('Feed')
-    .select(['id', 'cards', 'createdAt'])
+    .select(['id', 'createdAt'])
     .execute();
 
   let count = Math.floor(feeds.length / 50000) + 1;
@@ -111,8 +111,7 @@ async function createFeedIndex() {
   for (let i = 0; i < count; i++) {
     const sitemap = `
       <?xml version="1.0" encoding="UTF-8"?>
-      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+      <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         ${feeds
           .slice(i * 50000, (i + 1) * 50000)
           .map(
@@ -121,16 +120,6 @@ async function createFeedIndex() {
           <url>
             <loc>${serviceUrl}/feeds/${feed.id}</loc>
             <lastmod>${feed.createdAt.toISOString().split('T')[0]}</lastmod>
-            ${feed.cards
-              .map(
-                (card) =>
-                  `
-              <image:image>
-                <image:loc>${imageUrl}/${card}</image:loc>
-              </image:image>
-            `
-              )
-              .join('')}
           </url>
         `
           )
